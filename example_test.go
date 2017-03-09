@@ -9,10 +9,10 @@ import (
 
 func ExampleMAC() {
 	// Secrets must be 32 bytes long.
-	key := []byte("ThisMustNotBeSharedWithStrangers")
+	secret := []byte("ThisMustNotBeSharedWithStrangers")
 
 	// Epochs are numeric and must match.
-	epoch := 20170308
+	epoch := uint32(20170308)
 
 	// Generate a MAC, using a secret, an epoch and a random seed.
 	mac1, err := macdaddy.New(secret, epoch, time.Now().Unix())
@@ -36,7 +36,7 @@ func ExampleMAC() {
 	if err != nil {
 		panic(err)
 	}
-	plain2, err := mac1.Decrypt(nil, encrypted)
+	plain2, err := mac2.Decrypt(nil, encrypted)
 	if err != nil {
 		panic(err)
 	}
@@ -51,19 +51,19 @@ func ExampleRing() {
 	const seed = 1234567890
 
 	// This is our latest/primary MAC
-	latest, err := macdaddy.New([]byte{"ThisIsOurVeryLatestSecretKey2017"}, 2017, seed)
+	latest, err := macdaddy.New([]byte("ThisIsOurVeryLatestSecretKey2017"), 2017, seed)
 	if err != nil {
 		panic(err)
 	}
 
 	// This is a MAC we have used previously
-	previous, err := macdaddy.New([]byte{"ThisIsAKeyWeUsedPreviouslyIn2016"}, 2016, seed)
+	previous, err := macdaddy.New([]byte("ThisIsAKeyWeUsedPreviouslyIn2016"), 2016, seed)
 	if err != nil {
 		panic(err)
 	}
 
 	// This is another legacy MAC we have used before
-	legacy, err := macdaddy.New([]byte{"ThisOneIsLegacyWeStillKeepAround"}, 2010, seed)
+	legacy, err := macdaddy.New([]byte("ThisOneIsLegacyWeStillKeepAround"), 2010, seed)
 	if err != nil {
 		panic(err)
 	}
@@ -85,7 +85,7 @@ func ExampleRing() {
 
 	// Now, decrypt a message encrypted with a previous MACs
 	oldmsg := previous.Encrypt(nil, []byte("I may from a different epoch but still decryptable"))
-	plain, err = ring.Decrypt(plain[:0], encrypted)
+	plain, err = ring.Decrypt(plain[:0], oldmsg)
 	if err != nil {
 		panic(err)
 	}

@@ -37,7 +37,7 @@ func (r *Ring) Encrypt(dst, src []byte) []byte {
 // Decrypt decrypts a message by using the correct
 // MAC from the determined message term
 func (r *Ring) Decrypt(dst, src []byte) ([]byte, error) {
-	if len(src) < termSize {
+	if len(src) < epochSize {
 		return dst, errAuthFailed
 	}
 

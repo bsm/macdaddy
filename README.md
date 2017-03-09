@@ -6,6 +6,10 @@
 
 MAC Daddy is a [Go](https://golang.org) library for generating encrypted messages and verifying their authenticity using the [Poly1305](https://en.wikipedia.org/wiki/Poly1305) [message authentication code](https://en.wikipedia.org/wiki/Message_authentication_code) with a [ChaCha20](https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant) cipher.
 
+# Documentation
+
+For documentation and examples, please see https://godoc.org/github.com/bsm/macdaddy.
+
 # Install
 
 ```
@@ -25,7 +29,7 @@ import (
 
 func main() {
 
-	key := []byte("ThisMustNotBeSharedWithStrangers")
+	secret := []byte("ThisMustNotBeSharedWithStrangers")
 
 	epoch := 20170308
 
@@ -46,7 +50,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	plain2, err := mac1.Decrypt(nil, encrypted)
+	plain2, err := mac2.Decrypt(nil, encrypted)
 	if err != nil {
 		panic(err)
 	}
@@ -107,7 +111,7 @@ func main() {
 	fmt.Printf("%q\n", plain)
 
 	oldmsg := previous.Encrypt(nil, []byte("I may from a different epoch but still decryptable"))
-	plain, err = ring.Decrypt(plain[:0], encrypted)
+	plain, err = ring.Decrypt(plain[:0], oldmsg)
 	if err != nil {
 		panic(err)
 	}
