@@ -23,7 +23,7 @@ func NewRing(primary *MAC) *Ring {
 }
 
 // Register registers an additional MAC. Please note that
-// registraion is based on the epoch. MACs with clashing epoch values
+// registration is based on the epoch. MACs with clashing epoch values
 // may override other, previously registered ones.
 func (r *Ring) Register(m *MAC) {
 	r.registry[m.Epoch()] = m

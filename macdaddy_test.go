@@ -121,15 +121,15 @@ func TestSuite(t *testing.T) {
 	RunSpecs(t, "macdaddy")
 }
 
-func BenchmarkMAC_Encrypt_64(b *testing.B) { benchmarkMAC_Encrypt(b, 64) }
-func BenchmarkMAC_Encrypt_1k(b *testing.B) { benchmarkMAC_Encrypt(b, 1024) }
-func BenchmarkMAC_Encrypt_1M(b *testing.B) { benchmarkMAC_Encrypt(b, 1024*024) }
+func BenchmarkMAC_Encrypt_64(b *testing.B) { benchmarkMACEncrypt(b, 64) }
+func BenchmarkMAC_Encrypt_1k(b *testing.B) { benchmarkMACEncrypt(b, 1024) }
+func BenchmarkMAC_Encrypt_1M(b *testing.B) { benchmarkMACEncrypt(b, 1024*024) }
 
-func BenchmarkMAC_Decrypt_64(b *testing.B) { benchmarkMAC_Decrypt(b, 64) }
-func BenchmarkMAC_Decrypt_1k(b *testing.B) { benchmarkMAC_Decrypt(b, 1024) }
-func BenchmarkMAC_Decrypt_1M(b *testing.B) { benchmarkMAC_Decrypt(b, 1024*1024) }
+func BenchmarkMAC_Decrypt_64(b *testing.B) { benchmarkMACDecrypt(b, 64) }
+func BenchmarkMAC_Decrypt_1k(b *testing.B) { benchmarkMACDecrypt(b, 1024) }
+func BenchmarkMAC_Decrypt_1M(b *testing.B) { benchmarkMACDecrypt(b, 1024*1024) }
 
-func benchmarkMAC_Encrypt(b *testing.B, n int) {
+func benchmarkMACEncrypt(b *testing.B, n int) {
 	key := bytes.Repeat([]byte{'x'}, 32)
 	msg := bytes.Repeat([]byte{'x'}, n)
 	mac, err := New(key, 0, 0)
@@ -145,7 +145,7 @@ func benchmarkMAC_Encrypt(b *testing.B, n int) {
 	}
 }
 
-func benchmarkMAC_Decrypt(b *testing.B, n int) {
+func benchmarkMACDecrypt(b *testing.B, n int) {
 	key := bytes.Repeat([]byte{'x'}, 32)
 	mac, err := New(key, 0, 0)
 	if err != nil {
