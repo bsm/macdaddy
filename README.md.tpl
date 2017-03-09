@@ -6,11 +6,11 @@
 
 MAC Daddy is a [Go](https://golang.org) library for generating encrypted messages and verifying their authenticity using the [Poly1305](https://en.wikipedia.org/wiki/Poly1305) [message authentication code](https://en.wikipedia.org/wiki/Message_authentication_code) with a [ChaCha20](https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant) cipher.
 
-# Documentation
+## Documentation
 
 For documentation and examples, please see https://godoc.org/github.com/bsm/macdaddy.
 
-# Install
+## Install
 
 ```
 go get -u github.com/bsm/macdaddy

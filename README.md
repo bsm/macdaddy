@@ -6,11 +6,11 @@
 
 MAC Daddy is a [Go](https://golang.org) library for generating encrypted messages and verifying their authenticity using the [Poly1305](https://en.wikipedia.org/wiki/Poly1305) [message authentication code](https://en.wikipedia.org/wiki/Message_authentication_code) with a [ChaCha20](https://en.wikipedia.org/wiki/Salsa20#ChaCha_variant) cipher.
 
-# Documentation
+## Documentation
 
 For documentation and examples, please see https://godoc.org/github.com/bsm/macdaddy.
 
-# Install
+## Install
 
 ```
 go get -u github.com/bsm/macdaddy
@@ -31,7 +31,7 @@ func main() {
 
 	secret := []byte("ThisMustNotBeSharedWithStrangers")
 
-	epoch := 20170308
+	epoch := uint32(20170308)
 
 	mac1, err := macdaddy.New(secret, epoch, time.Now().Unix())
 	if err != nil {
@@ -83,17 +83,17 @@ import (
 func main() {
 	const seed = 1234567890
 
-	latest, err := macdaddy.New([]byte{"ThisIsOurVeryLatestSecretKey2017"}, 2017, seed)
+	latest, err := macdaddy.New([]byte("ThisIsOurVeryLatestSecretKey2017"), 2017, seed)
 	if err != nil {
 		panic(err)
 	}
 
-	previous, err := macdaddy.New([]byte{"ThisIsAKeyWeUsedPreviouslyIn2016"}, 2016, seed)
+	previous, err := macdaddy.New([]byte("ThisIsAKeyWeUsedPreviouslyIn2016"), 2016, seed)
 	if err != nil {
 		panic(err)
 	}
 
-	legacy, err := macdaddy.New([]byte{"ThisOneIsLegacyWeStillKeepAround"}, 2010, seed)
+	legacy, err := macdaddy.New([]byte("ThisOneIsLegacyWeStillKeepAround"), 2010, seed)
 	if err != nil {
 		panic(err)
 	}
