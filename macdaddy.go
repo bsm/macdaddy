@@ -4,14 +4,11 @@ import (
 	"bytes"
 	"crypto/cipher"
 	"encoding/binary"
-	"errors"
 	"math/rand"
 	"sync"
 
 	"golang.org/x/crypto/chacha20poly1305"
 )
-
-var errAuthFailed = errors.New("macdaddy: message authentication failed")
 
 const (
 	epochSize = 4
@@ -73,16 +70,16 @@ func (m *MAC) Encrypt(dst, src []byte) []byte {
 // authenticated.
 func (m *MAC) Decrypt(dst, src []byte) ([]byte, error) {
 	if len(src) < m.Overhead() {
-		return dst, errAuthFailed
+		return dst, ErrBadToken
 	}
 
 	if !bytes.Equal(src[:nonceOffset], m.epoch) {
-		return dst, errAuthFailed
+		return dst, ErrUnknownEpoch
 	}
 
 	dst, err := m.parent.Open(dst, src[nonceOffset:messageOffset], src[messageOffset:], nil)
 	if err != nil {
-		return dst, errAuthFailed
+		return dst, ErrBadToken
 	}
 	return dst, nil
 }

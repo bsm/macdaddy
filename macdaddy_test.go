@@ -90,9 +90,9 @@ var _ = Describe("MAC", func() {
 		Expect(m1).NotTo(Equal(m2))
 
 		_, err = mac2.Decrypt(nil, m1)
-		Expect(err).To(Equal(errAuthFailed))
+		Expect(err).To(Equal(ErrBadToken))
 		_, err = mac1.Decrypt(nil, m2)
-		Expect(err).To(Equal(errAuthFailed))
+		Expect(err).To(Equal(ErrBadToken))
 	})
 
 	It("should require consistent epochs", func() {
@@ -107,9 +107,9 @@ var _ = Describe("MAC", func() {
 		Expect(m1).NotTo(Equal(m2))
 
 		_, err = mac2.Decrypt(nil, m1)
-		Expect(err).To(Equal(errAuthFailed))
+		Expect(err).To(Equal(ErrUnknownEpoch))
 		_, err = mac1.Decrypt(nil, m2)
-		Expect(err).To(Equal(errAuthFailed))
+		Expect(err).To(Equal(ErrUnknownEpoch))
 	})
 
 })

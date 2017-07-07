@@ -35,16 +35,16 @@ func (r *Ring) Encrypt(dst, src []byte) []byte {
 }
 
 // Decrypt decrypts a message by using the correct
-// MAC from the determined message term
+// MAC from the determined message epoch
 func (r *Ring) Decrypt(dst, src []byte) ([]byte, error) {
 	if len(src) < epochSize {
-		return dst, errAuthFailed
+		return dst, ErrBadToken
 	}
 
-	term := binary.LittleEndian.Uint32(src)
-	mac, ok := r.registry[term]
+	epoch := binary.LittleEndian.Uint32(src)
+	mac, ok := r.registry[epoch]
 	if !ok {
-		return dst, errAuthFailed
+		return dst, ErrUnknownEpoch
 	}
 
 	return mac.Decrypt(dst, src)

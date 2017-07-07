@@ -32,7 +32,7 @@ var _ = Describe("Ring", func() {
 		_, err := mac7.Decrypt(nil, msg)
 		Expect(err).NotTo(HaveOccurred())
 		_, err = mac6.Decrypt(nil, msg)
-		Expect(err).To(Equal(errAuthFailed))
+		Expect(err).To(Equal(ErrUnknownEpoch))
 	})
 
 	It("should decrypt using registered mac", func() {
@@ -44,7 +44,7 @@ var _ = Describe("Ring", func() {
 
 	It("should fail to decrypt invalid messages", func() {
 		_, err := subject.Decrypt(nil, []byte("a"))
-		Expect(err).To(Equal(errAuthFailed))
+		Expect(err).To(Equal(ErrBadToken))
 	})
 
 	It("should fail to decrypt messages from bad terms", func() {
@@ -52,7 +52,7 @@ var _ = Describe("Ring", func() {
 		Expect(err).NotTo(HaveOccurred())
 
 		_, err = subject.Decrypt(nil, mac3.Encrypt(nil, plain))
-		Expect(err).To(Equal(errAuthFailed))
+		Expect(err).To(Equal(ErrUnknownEpoch))
 	})
 
 	It("should fail to decrypt messages from non-matching MACs", func() {
@@ -60,7 +60,7 @@ var _ = Describe("Ring", func() {
 		Expect(err).NotTo(HaveOccurred())
 
 		_, err = subject.Decrypt(nil, mac6b.Encrypt(nil, plain))
-		Expect(err).To(Equal(errAuthFailed))
+		Expect(err).To(Equal(ErrBadToken))
 	})
 
 })
