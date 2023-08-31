@@ -1,9 +1,11 @@
 module github.com/bsm/macdaddy
 
-go 1.15
+go 1.18
 
 require (
-	github.com/onsi/ginkgo v1.14.0
-	github.com/onsi/gomega v1.10.1
-	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
+	github.com/bsm/ginkgo/v2 v2.12.0
+	github.com/bsm/gomega v1.27.10
+	golang.org/x/crypto v0.12.0
 )
+
+require golang.org/x/sys v0.11.0 // indirect

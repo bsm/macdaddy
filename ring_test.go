@@ -3,8 +3,8 @@ package macdaddy
 import (
 	"bytes"
 
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
+	. "github.com/bsm/ginkgo/v2"
+	. "github.com/bsm/gomega"
 )
 
 var _ = Describe("Ring", func() {
